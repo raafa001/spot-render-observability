@@ -1,0 +1,26 @@
+{
+  "title": "Spot Render Overview",
+  "timezone": "browser",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Success per Project",
+      "targets": [
+        {
+          "expr": "sum(rate(render_success_total[5m])) by (project)",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Errors per Artist",
+      "targets": [
+        {
+          "expr": "sum(rate(render_error_total[5m])) by (artist)",
+          "refId": "B"
+        }
+      ]
+    }
+  ]
+}

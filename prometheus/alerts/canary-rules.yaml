@@ -1,0 +1,17 @@
+groups:
+  - name: spot-render
+    rules:
+      - alert: CanaryErrorSpike
+        expr: sum(rate(render_canary_requests_total{status="error",version="canary"}[5m])) / sum(rate(render_canary_requests_total{version="canary"}[5m])) > 0.01
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Erro alto no canário"
+      - alert: RenderDurationHigh
+        expr: histogram_quantile(0.95, sum(rate(render_duration_seconds_bucket[5m])) by (le)) > 600
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Render p95 > 10min"
